@@ -23,4 +23,30 @@ Template.dataTables.rendered = function(){
 
     });
 
+  $('#purchase_date .input-group.date').datepicker({
+    todayBtn: "linked",
+    keyboardNavigation: false,
+    forceParse: false,
+    calendarWeeks: true,
+    autoclose: true
+  });
+
+  $('#lastupdate_date .input-group.date').datepicker({
+    todayBtn: "linked",
+    keyboardNavigation: false,
+    forceParse: false,
+    calendarWeeks: true,
+    autoclose: true
+  });
+
 };
+
+Template.dataTables.onCreated = function () {
+  Meteor.subscribe('partcol');
+};
+
+Template.dataTables.helpers({
+  "components": function() {
+    return Parts.find({}).fetch();
+  }
+});

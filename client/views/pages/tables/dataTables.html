@@ -54,7 +54,7 @@
                                                 Predefined
                                             </div>
                                             <div class="col-sm-4">
-                                                <input type="checkbox">
+                                                <input type="checkbox" id="activatemoms">
                                                 <span>Activate moms based on type</span>
                                             </div>
                                         </div>
@@ -80,8 +80,8 @@
                                         </div>
                                         <div class="form-group">
                                             <label class="col-sm-2 control-label">Description</label>
-                                            <div class="col-sm-14">
-                                                <textarea id="description_text"></textarea>
+                                            <div class="col-sm-10">
+                                                <textarea class="col-sm-10" id="description_text"></textarea>
                                             </div>
                                         </div>
                                         <div class="form-group">
@@ -105,21 +105,86 @@
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <label class="col-sm-5 control-label">(inc moms) Estimated Cost</label>
-                                            <div class="col-sm-4">
+                                            <label class="col-sm-3 control-label">(inc moms) Estimated Cost</label>
+                                            <div class="col-sm-2">
                                                 <input type="number" id="estimate-val" placeholder="1" class="form-control">
                                             </div>
-                                            <label class="col-sm-5 control-label">Real Cost</label>
-                                            <div class="col-sm-4">
+                                            <label class="col-sm-3 control-label">Real Cost</label>
+                                            <div class="col-sm-2">
                                                 <input type="number" id="realcost-val" placeholder="1" class="form-control">
                                             </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-3 control-label">Yearly inflation</label>
+                                            <div class="col-sm-2">
+                                                <input type="number" id="inflation-val" placeholder="1" class="form-control">
+                                            </div>
+                                            <label class="col-sm-2 control-label">Percentage</label>
+                                        </div>
+                                        <div class="form-group" id="purchase_date">
+                                            <label class="col-sm-3 control-label">Purchase year</label>
+                                            <div class="input-group col-sm-2 date">
+                                                <span class="input-group-addon">
+                                                    <i class="fa fa-calendar"></i>
+                                                </span>
+                                                <input type="text" class="form-control" value="03/04/2014">
+                                            </div>
+                                        </div>
+                                        <div class="form-group" id="lastupdate_date">
+                                            <label class="col-sm-3 control-label">Latest update</label>
+                                            <div class="input-group col-sm-2 date">
+                                                <span class="input-group-addon">
+                                                    <i class="fa fa-calendar"></i>
+                                                </span>
+                                                <input type="text" class="form-control" value="03/04/2014">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-3 control-label">Lifespan</label>
+                                            <div class="col-sm-2">
+                                                <input type="number" id="lifespan-val" placeholder="1" class="form-control">
+                                            </div>
+                                            <label class="col-sm-2 control-label">Integer</label>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-3 control-label">Added year</label>
+                                            <div class="col-sm-2">
+                                                <input type="number" id="addedyear-val" placeholder="1" class="form-control">
+                                            </div>
+                                            <label class="col-sm-2 control-label">Integer</label>
+                                            <label class="col-sm-2 control-label">Prolog Lifespan</label>
+                                            <div class="col-sm-2">
+                                                <input type="checkbox" id="activatemoms">
+                                                <span>Yes</span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group leftalign">
+                                            <textarea class="col-sm-10" id="description_text" placeholder="Why added year"></textarea>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">K3 component</label>
+                                            <div class="col-sm-2">
+                                                <input type="checkbox" id="k3component">
+                                                <span>Check me out</span>
+                                            </div>
+                                            <label class="col-sm-3 control-label">(k3 cannot be yearly recurrent)</label>
+                                        </div>
+                                        <div class="form-group leftalign">
+                                            <label title="Upload document file" for="inputDoc" class="btn btn-primary col-sm-3">
+                                                <input type="file" accept="*" name="file" id="inputDoc" class="hide">
+                                                Upload documents
+                                            </label>
+                                            <label class="col-sm-2 control-label">Document name</label>
+                                            <label class="col-sm-2 control-label">Date uploaded</label>
+                                            <label class="col-sm-2 control-label">Comment</label>
                                         </div>
                                     </form>
                                 </div>
 
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
-                                    <button type="button" class="btn btn-primary">Save changes</button>
+                                    <button type="button" class="btn btn-primary">Complete</button>
+                                    <button type="button" class="btn btn-primary">Save</button>
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Delete</button>
                                 </div>
                             </div>
                         </div>
@@ -182,16 +247,18 @@
                                                 </tr>
                                                 </thead>
                                                 <tbody>
-                                                <tr class="gradeX">
-                                                    <td>category 1</td>
-                                                    <td>Type1 </td>
-                                                    <td>Location 1</td>
-                                                    <td class="center">
-                                                        part1
-                                                        <i class="fa fa-trash delete-part-button"></i>
-                                                        <i class="fa fa-pencil edit-part-button"></i>
-                                                    </td>
-                                                </tr>
+                                                {{#each components}}
+                                                    <tr class="gradeX">
+                                                        <td>{{category}}</td>
+                                                        <td>{{type}} </td>
+                                                        <td>{{location}}</td>
+                                                        <td class="center">
+                                                            {{partname}}
+                                                            <i class="fa fa-trash delete-part-button"></i>
+                                                            <i class="fa fa-pencil edit-part-button"></i>
+                                                        </td>
+                                                    </tr>
+                                                {{/each}}
 
                                                 <tr class="gradeX">
                                                     <td>category 1</td>
