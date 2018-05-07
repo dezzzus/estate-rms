@@ -10,7 +10,7 @@
                         <h5>Table Page</h5>
                         {{>iboxTools}}
                     </div>
-                    <div class="modal inmodal fade" id="myModal5" tabindex="-1" role="dialog"  aria-hidden="true">
+                    <div class="modal inmodal fade" id="addComponentModal" tabindex="-1" role="dialog"  aria-hidden="true">
                         <div class="modal-dialog modal-lg">
                             <div class="modal-content">
                                 <div class="modal-header">
@@ -233,7 +233,7 @@
                                                 <div class="input-group-btn">
                                                     <span class="input-group-btn" id="add-part-button">
                                                         <i class="fa fa-plus-square"></i>
-                                                        <button type="button" class="btn btn-sm btn-white" data-toggle="modal" data-target="#myModal5"> Add task</button>
+                                                        <button type="button" class="btn btn-sm btn-white" data-toggle="modal" data-target="#addComponentModal"> Add task</button>
                                                     </span>
                                                 </div>
                                             </div>
@@ -255,7 +255,7 @@
                                                         <td class="center">
                                                             {{partname}}
                                                             <i class="fa fa-trash delete-part-button"></i>
-                                                            <i class="fa fa-pencil edit-part-button"></i>
+                                                            <i class="fa fa-pencil edit-part-button" data-toggle="modal" data-target="#addComponentModal"></i>
                                                         </td>
                                                     </tr>
                                                 {{/each}}
