@@ -86,7 +86,7 @@ Parts.schema = new SimpleSchema({
     type: Date,
     label: "Purchase Year"
   },
-  latestyear: {
+  lastupdateyear: {
     type: String,
     label: "Latest Year"
   },
