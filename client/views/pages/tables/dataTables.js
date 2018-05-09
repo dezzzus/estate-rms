@@ -1,29 +1,27 @@
 Template.dataTables.rendered = function(){
 
-    // Initialize dataTables
-  console.log ('rendered');
-  console.log (Parts.find().fetch());
-    $('.dataTables-example').DataTable({
-        dom: '<"html5buttons"B>lTfgitp',
-        buttons: [
-            { extend: 'copy'},
-            {extend: 'csv'},
-            {extend: 'excel', title: 'ExampleFile'},
-            {extend: 'pdf', title: 'ExampleFile'},
+  // Initialize dataTables
+  $('.dataTables-example').DataTable({
+    dom: '<"html5buttons"B>lTfgitp',
+    buttons: [
+      { extend: 'copy'},
+      {extend: 'csv'},
+      {extend: 'excel', title: 'ExampleFile'},
+      {extend: 'pdf', title: 'ExampleFile'},
 
-            {extend: 'print',
-                customize: function (win){
-                    $(win.document.body).addClass('white-bg');
-                    $(win.document.body).css('font-size', '10px');
+      {extend: 'print',
+        customize: function (win){
+          $(win.document.body).addClass('white-bg');
+          $(win.document.body).css('font-size', '10px');
 
-                    $(win.document.body).find('table')
-                        .addClass('compact')
-                        .css('font-size', 'inherit');
-                }
-            }
-        ]
+          $(win.document.body).find('table')
+            .addClass('compact')
+            .css('font-size', 'inherit');
+        }
+      }
+    ]
 
-    });
+  });
 
   $('#purchase_date .input-group.date').datepicker({
     todayBtn: "linked",
@@ -41,24 +39,65 @@ Template.dataTables.rendered = function(){
     autoclose: true
   });
 
+  // Initialize i-check plugin
+  $('.i-checks').iCheck({
+    checkboxClass: 'icheckbox_square-green',
+    radioClass: 'iradio_square-green'
+  });
+
+  this.addModal = $('#addComponentModal').clone();
+  console.log (this.addModal);
 };
 
 Template.dataTables.onCreated (function () {
   //Meteor.subscribe('partcol');
-  console.log ('oncreated');
-  console.log (this);
+  this.documentpath = null;
 });
 
 Template.dataTables.helpers({
   "components": function() {
-    console.log ('helper');
-    console.log (Parts.find().fetch());
     return Parts.find({}).fetch();
   }
 });
 
 Template.dataTables.events({
-  "click #save-component": function (evt) {
+  "click button[data-target=#addComponentModal]": function(ev, inst) {
+    ev.preventDefault();
+
+    var clone = inst.addModal.clone();
+    console.log (inst.addModal);
+
+    $("#addComponentModal").remove();
+    $('.modaldivs').append(clone);
+    console.log (clone);
+
+    $('#addComponentModal #purchase_date .input-group.date').datepicker({
+      todayBtn: "linked",
+      keyboardNavigation: false,
+      forceParse: false,
+      calendarWeeks: true,
+      autoclose: true
+    });
+
+    $('#addComponentModal #lastupdate_date .input-group.date').datepicker({
+      todayBtn: "linked",
+      keyboardNavigation: false,
+      forceParse: false,
+      calendarWeeks: true,
+      autoclose: true
+    });
+
+    // Initialize i-check plugin
+    $('#addComponentModal .i-checks').iCheck({
+      checkboxClass: 'icheckbox_square-green',
+      radioClass: 'iradio_square-green'
+    });
+
+    $("#addComponentModal").modal("show");
+
+  },
+
+  "click #save-component": function (evt, inst) {
     let partname = $('#part').val();
     let category = $('#category-select option:selected').text();
     let type = $('#type-select option:selected').text();
@@ -75,9 +114,29 @@ Template.dataTables.events({
     let lifespan = $('#lifespan-val').val();
     let addedyear = $('#addedyear-val').val();
     let whyadded = $('#whyadded_text').val();
+    let document = inst.documentpath;
     let newentry = {partname, category, type, place, description, quantity, unit, estimate, realcost, inflation, purchaseyear,
-      lastupdateyear, lifespan, addedyear, whyadded};
+      lastupdateyear, lifespan, addedyear, whyadded, document};
     console.log (newentry);
-    Parts.insert(newentry);
-  }
+    let newid = Parts.insert(newentry);
+    console.log (newid);
+    Meteor.call('move-file', document, newid, (err, result) => {
+      if (err) {
+        console.log(err);
+      }
+    });
+  },
+  "change #addComponentModal #inputDoc": function (evt, inst) {
+    //var func = this;
+    var file = evt.currentTarget.files[0];
+    var reader = new FileReader();
+    reader.onload = function(fileLoadEvent) {
+      Meteor.call('file-upload', file.name, fileLoadEvent.target.result, (err, result) => {
+        if (result) {
+          inst.documentpath = file.name;
+        }
+      });
+    };
+    reader.readAsDataURL(file);
+  },
 });
