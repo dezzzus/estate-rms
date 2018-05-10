@@ -46,7 +46,7 @@ Template.dataTables.rendered = function(){
   });
 
   this.addModal = $('#addComponentModal').clone();
-  console.log (this.addModal);
+  //this.editModal = $('#editComponentModal').clone();
 };
 
 Template.dataTables.onCreated (function () {
@@ -65,7 +65,6 @@ Template.dataTables.events({
     ev.preventDefault();
 
     var clone = inst.addModal.clone();
-    console.log (inst.addModal);
 
     $("#addComponentModal").remove();
     $('.modaldivs').append(clone);
@@ -97,7 +96,61 @@ Template.dataTables.events({
 
   },
 
-  "click #save-component": function (evt, inst) {
+  "click i[data-target=#editComponentModal]": function(evt, inst) {
+    evt.preventDefault();
+
+    /*
+    var clone = inst.editModal.clone();
+
+    $("#editComponentModal").remove();
+    $('.modaldivs').append(clone);
+    console.log (clone);
+
+    $('#editComponentModal #purchase_date .input-group.date').datepicker({
+      todayBtn: "linked",
+      keyboardNavigation: false,
+      forceParse: false,
+      calendarWeeks: true,
+      autoclose: true
+    });
+
+    $('#editComponentModal #lastupdate_date .input-group.date').datepicker({
+      todayBtn: "linked",
+      keyboardNavigation: false,
+      forceParse: false,
+      calendarWeeks: true,
+      autoclose: true
+    });
+
+    // Initialize i-check plugin
+    $('#editComponentModal .i-checks').iCheck({
+      checkboxClass: 'icheckbox_square-green',
+      radioClass: 'iradio_square-green'
+    });*/
+    let componentid = evt.target.dataset.id;
+    let component = Parts.findOne({_id:componentid});
+    $("#editComponentModal").modal("show");
+    $('#editComponentModal #part').val(component.partname);
+    console.log (component.category);
+    $('#editComponentModal #category-select').val(component.category);
+    //$('#type-select option:selected').text();
+    $('#editComponentModal #place-input').val(component.place);
+    //let yearlyrecurr = $('#yearlyrecurr').;
+    $('#editComponentModal #description_text').val(component.description);
+    $('#editComponentModal #quantity-val').val(component.quantity);
+    //$('#unit-select option:selected').text();
+    $('#editComponentModal #estimate-val').val(component.estimate);
+    $('#editComponentModal #realcost-val').val(component.realcost);
+    $('#editComponentModal #inflation-val').val(component.inflation);
+    $('#editComponentModal #purchase').val(component.purchaseyear);
+    $('#editComponentModal #lastupdate').val(component.lastupdateyear);
+    $('#editComponentModal #lifespan-val').val(component.lifespan);
+    $('#editComponentModal #addedyear-val').val(component.addedyear);
+    $('#editComponentModal #whyadded_text').val(component.whyadded);
+    $('#editComponentModal #save-component').attr('data-id', componentid);
+  },
+
+  "click #addComponentModal #save-component": function (evt, inst) {
     let partname = $('#part').val();
     let category = $('#category-select option:selected').text();
     let type = $('#type-select option:selected').text();
@@ -117,15 +170,54 @@ Template.dataTables.events({
     let document = inst.documentpath;
     let newentry = {partname, category, type, place, description, quantity, unit, estimate, realcost, inflation, purchaseyear,
       lastupdateyear, lifespan, addedyear, whyadded, document};
-    console.log (newentry);
+    //console.log (newentry);
     let newid = Parts.insert(newentry);
-    console.log (newid);
-    Meteor.call('move-file', document, newid, (err, result) => {
-      if (err) {
-        console.log(err);
-      }
-    });
+    //console.log (newid);
+    if (document) {
+      Meteor.call('move-file', document, newid, (err, result) => {
+        if (err) {
+          console.log(err);
+        }
+      });
+    }
   },
+
+  "click #editComponentModal #save-component": function (evt, inst) {
+    let componentid = evt.target.dataset.id;
+    let partname = $('#editComponentModal #part').val();
+    let category = $('#editComponentModal #category-select option:selected').text();
+    let type = $('#editComponentModal #type-select option:selected').text();
+    let place = $('#editComponentModal #place-input').val();
+    //let yearlyrecurr = $('#yearlyrecurr').;
+    let description = $('#editComponentModal #description_text').val();
+    let quantity = $('#editComponentModal #quantity-val').val();
+    let unit = $('#editComponentModal #unit-select option:selected').text();
+    let estimate = $('#editComponentModal #estimate-val').val();
+    let realcost = $('#editComponentModal #realcost-val').val();
+    let inflation = $('#editComponentModal #inflation-val').val();
+    let purchaseyear = $('#editComponentModal #purchase').val();
+    let lastupdateyear = $('#editComponentModal #lastupdate').val();
+    let lifespan = $('#editComponentModal #lifespan-val').val();
+    let addedyear = $('#editComponentModal #addedyear-val').val();
+    let whyadded = $('#editComponentModal #whyadded_text').val();
+    let document = inst.documentpath;
+    let newentry = {partname, category, type, place, description, quantity, unit, estimate, realcost, inflation, purchaseyear,
+      lastupdateyear, lifespan, addedyear, whyadded};
+    if (document) {
+      newentry.document = document;
+    }
+    console.log (newentry);
+    Parts.update({_id: componentid}, {$set:newentry});
+    //console.log (newid);
+    if (document) {
+      Meteor.call('move-file', document, componentid, (err, result) => {
+        if (err) {
+          console.log(err);
+        }
+      });
+    }
+  },
+
   "change #addComponentModal #inputDoc": function (evt, inst) {
     //var func = this;
     var file = evt.currentTarget.files[0];

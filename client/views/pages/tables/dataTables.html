@@ -30,10 +30,10 @@
                                             <label class="col-sm-2 control-label">Cat</label>
                                             <div class="col-sm-4">
                                                 <select class="form-control m-b" id="category-select">
-                                                    <option>category 1</option>
-                                                    <option>category 2</option>
-                                                    <option>category 3</option>
-                                                    <option>category 4</option>
+                                                    <option value="category 1">category 1</option>
+                                                    <option value="category 2">category 2</option>
+                                                    <option value="category 3">category 3</option>
+                                                    <option value="category 4">category 4</option>
                                                 </select>
                                             </div>
                                             <div class="col-sm-1 control-label">
@@ -44,10 +44,10 @@
                                             <label class="col-sm-2 control-label">Type</label>
                                             <div class="col-sm-4">
                                                 <select class="form-control m-b" id="type-select">
-                                                    <option>type 1</option>
-                                                    <option>type 2</option>
-                                                    <option>type 3</option>
-                                                    <option>type 4</option>
+                                                    <option value="type 1">type 1</option>
+                                                    <option value="type 2">type 2</option>
+                                                    <option value="type 3">type 3</option>
+                                                    <option value="type 4">type 4</option>
                                                 </select>
                                             </div>
                                             <div class="col-sm-1 control-label">
@@ -94,10 +94,10 @@
                                             <label class="col-sm-2 control-label">Unit</label>
                                             <div class="col-sm-4">
                                                 <select class="form-control m-b" id="unit-select">
-                                                    <option>Unit 1</option>
-                                                    <option>Unit 2</option>
-                                                    <option>Unit 3</option>
-                                                    <option>Unit 4</option>
+                                                    <option value="Unit 1">Unit 1</option>
+                                                    <option value="Unit 2">Unit 2</option>
+                                                    <option value="Unit 3">Unit 3</option>
+                                                    <option value="Unit 4">Unit 4</option>
                                                 </select>
                                             </div>
                                             <div class="col-sm-1 control-label">
@@ -164,8 +164,201 @@
                                         <div class="form-group">
                                             <label class="col-sm-2 control-label">K3 component</label>
                                             <div class="col-sm-2">
-                                                <input type="checkbox" id="k3component">
-                                                <span>Check me out</span>
+                                                <div class="i-checks">
+                                                    <label class="">
+                                                        <div class="icheckbox_square-green" style="position: relative;">
+                                                            <input type="checkbox" id="k3component" value="" style="position: absolute; opacity: 0;">
+                                                            <ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins>
+                                                        </div>
+                                                        <i></i> Check me out
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <label class="col-sm-3 control-label">(k3 cannot be yearly recurrent)</label>
+                                        </div>
+                                        <div class="form-group leftalign">
+                                            <label title="Upload document file" for="inputDoc" class="btn btn-primary col-sm-3">
+                                                <input type="file" accept="*" name="file" id="inputDoc" class="hide">
+                                                Upload documents
+                                            </label>
+                                            <label class="col-sm-2 control-label">Document name</label>
+                                            <label class="col-sm-2 control-label">Date uploaded</label>
+                                            <label class="col-sm-2 control-label">Comment</label>
+                                        </div>
+                                    </form>
+                                </div>
+
+                                <div class="modal-footer">
+                                    <button type="button" id="complete-component" class="btn btn-primary">Complete</button>
+                                    <button type="button" id="save-component" class="btn btn-primary" data-dismiss="modal">Save</button>
+                                    <button type="button" id="remove-component" class="btn btn-danger" data-dismiss="modal">Delete</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal inmodal fade" id="editComponentModal" tabindex="-1" role="dialog"  aria-hidden="true">
+                        <div class="modal-dialog modal-lg">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                                    <h4 class="modal-title">Edit Component</h4>
+                                    <small class="font-bold">You can edit existing component here.</small>
+                                </div>
+                                <div class="modal-body">
+                                    <form class="form-horizontal" enctype="multipart/form-data">
+                                        <div class="form-group">
+                                            <label class="col-lg-2 control-label">Part</label>
+                                            <div class="col-lg-4">
+                                                <input type="text" placeholder="part" id="part" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">Cat</label>
+                                            <div class="col-sm-4">
+                                                <select class="form-control m-b" id="category-select">
+                                                    <option value="category 1">category 1</option>
+                                                    <option value="category 2">category 2</option>
+                                                    <option value="category 3">category 3</option>
+                                                    <option value="category 4">category 4</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-sm-1 control-label">
+                                                Predefined
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">Type</label>
+                                            <div class="col-sm-4">
+                                                <select class="form-control m-b" id="type-select">
+                                                    <option value="type 1">type 1</option>
+                                                    <option value="type 2">type 2</option>
+                                                    <option value="type 3">type 3</option>
+                                                    <option value="type 4">type 4</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-sm-1 control-label">
+                                                Predefined
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <input type="checkbox" id="activatemoms">
+                                                <span>Activate moms based on type</span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-lg-2 control-label">Place</label>
+                                            <div class="col-lg-4">
+                                                <input type="text" placeholder="Place" id="place-input" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-lg-2 control-label">Yearly Recurrent</label>
+                                            <div class="col-lg-10">
+                                                <div class="i-checks">
+                                                    <label class="">
+                                                        <div class="icheckbox_square-green" style="position: relative;">
+                                                            <input type="checkbox" id="yearlyrecurr" value="" style="position: absolute; opacity: 0;">
+                                                            <ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins>
+                                                        </div>
+                                                        <i></i> Check me out
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">Description</label>
+                                            <div class="col-sm-10">
+                                                <textarea class="col-sm-10" id="description_text"></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">Quantity</label>
+                                            <div class="col-sm-4">
+                                                <input type="number" id="quantity-val" placeholder="1" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">Unit</label>
+                                            <div class="col-sm-4">
+                                                <select class="form-control m-b" id="unit-select">
+                                                    <option value="Unit 1">Unit 1</option>
+                                                    <option value="Unit 2">Unit 2</option>
+                                                    <option value="Unit 3">Unit 3</option>
+                                                    <option value="Unit 4">Unit 4</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-sm-1 control-label">
+                                                Predefined
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-3 control-label">(inc moms) Estimated Cost</label>
+                                            <div class="col-sm-2">
+                                                <input type="number" id="estimate-val" placeholder="1" class="form-control">
+                                            </div>
+                                            <label class="col-sm-3 control-label">Real Cost</label>
+                                            <div class="col-sm-2">
+                                                <input type="number" id="realcost-val" placeholder="1" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-3 control-label">Yearly inflation</label>
+                                            <div class="col-sm-2">
+                                                <input type="number" id="inflation-val" placeholder="1" class="form-control">
+                                            </div>
+                                            <label class="col-sm-2 control-label">Percentage</label>
+                                        </div>
+                                        <div class="form-group" id="purchase_date">
+                                            <label class="col-sm-3 control-label">Purchase year</label>
+                                            <div class="input-group col-sm-2 date">
+                                                <span class="input-group-addon">
+                                                    <i class="fa fa-calendar"></i>
+                                                </span>
+                                                <input type="text" class="form-control" id="purchase" value="03/04/2014">
+                                            </div>
+                                        </div>
+                                        <div class="form-group" id="lastupdate_date">
+                                            <label class="col-sm-3 control-label">Latest update</label>
+                                            <div class="input-group col-sm-2 date">
+                                                <span class="input-group-addon">
+                                                    <i class="fa fa-calendar"></i>
+                                                </span>
+                                                <input type="text" class="form-control" id="lastupdate" value="03/04/2014">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-3 control-label">Lifespan</label>
+                                            <div class="col-sm-2">
+                                                <input type="number" id="lifespan-val" placeholder="1" class="form-control">
+                                            </div>
+                                            <label class="col-sm-2 control-label">Integer</label>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-3 control-label">Added year</label>
+                                            <div class="col-sm-2">
+                                                <input type="number" id="addedyear-val" placeholder="1" class="form-control">
+                                            </div>
+                                            <label class="col-sm-2 control-label">Integer</label>
+                                            <label class="col-sm-2 control-label">Prolog Lifespan</label>
+                                            <div class="col-sm-2">
+                                                <input type="checkbox" id="activatemoms">
+                                                <span>Yes</span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group leftalign">
+                                            <textarea class="col-sm-10" id="whyadded_text" placeholder="Why added year"></textarea>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">K3 component</label>
+                                            <div class="col-sm-2">
+                                                <div class="i-checks">
+                                                    <label class="">
+                                                        <div class="icheckbox_square-green" style="position: relative;">
+                                                            <input type="checkbox" id="k3component" value="" style="position: absolute; opacity: 0;">
+                                                            <ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins>
+                                                        </div>
+                                                        <i></i> Check me out
+                                                    </label>
+                                                </div>
                                             </div>
                                             <label class="col-sm-3 control-label">(k3 cannot be yearly recurrent)</label>
                                         </div>
@@ -255,7 +448,7 @@
                                                         <td class="center">
                                                             {{partname}}
                                                             <i class="fa fa-trash delete-part-button"></i>
-                                                            <i class="fa fa-pencil edit-part-button" data-toggle="modal" data-target="#addComponentModal"></i>
+                                                            <i class="fa fa-pencil edit-part-button" data-id="{{_id}}" data-target="#editComponentModal"></i>
                                                         </td>
                                                     </tr>
                                                 {{/each}}
