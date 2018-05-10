@@ -218,6 +218,28 @@ Template.dataTables.events({
     }
   },
 
+  "click .delete-part-button": function(evt, inst) {
+    let componentid = evt.target.dataset.id;
+    swal({
+        title: "Are you sure?",
+        text: "Your will not be able to recover this component data!",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#DD6B55",
+        confirmButtonText: "Yes, delete it!",
+        cancelButtonText: "No, cancel!",
+        closeOnConfirm: false,
+        closeOnCancel: true },
+      function (isConfirm) {
+        if (isConfirm) {
+          Parts.remove({_id: componentid});
+          swal("Deleted!", "Component has been deleted.", "success");
+        } else {
+          //swal("Cancelled", "Component is safe :)", "error");
+        }
+      });
+  },
+
   "change #addComponentModal #inputDoc": function (evt, inst) {
     //var func = this;
     var file = evt.currentTarget.files[0];
