@@ -133,12 +133,12 @@ Template.dataTables.events({
     $('#editComponentModal #part').val(component.partname);
     console.log (component.category);
     $('#editComponentModal #category-select').val(component.category);
-    //$('#type-select option:selected').text();
+    $('#editComponentModal #type-select').val(component.type);
     $('#editComponentModal #place-input').val(component.place);
     //let yearlyrecurr = $('#yearlyrecurr').;
     $('#editComponentModal #description_text').val(component.description);
     $('#editComponentModal #quantity-val').val(component.quantity);
-    //$('#unit-select option:selected').text();
+    $('#editComponentModal #unit-select').val(component.unit);
     $('#editComponentModal #estimate-val').val(component.estimate);
     $('#editComponentModal #realcost-val').val(component.realcost);
     $('#editComponentModal #inflation-val').val(component.inflation);
