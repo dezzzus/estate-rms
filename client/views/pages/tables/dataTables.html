@@ -54,8 +54,15 @@
                                                 Predefined
                                             </div>
                                             <div class="col-sm-4">
-                                                <input type="checkbox" id="activatemoms">
-                                                <span>Activate moms based on type</span>
+                                                <div class="i-checks">
+                                                    <label class="">
+                                                        <div class="icheckbox_square-green" style="position: relative;">
+                                                            <input type="checkbox" id="activatemoms" value="" style="position: absolute; opacity: 0;">
+                                                            <ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins>
+                                                        </div>
+                                                        <i></i> Activate moms based on type
+                                                    </label>
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="form-group">
@@ -154,8 +161,15 @@
                                             <label class="col-sm-2 control-label">Integer</label>
                                             <label class="col-sm-2 control-label">Prolog Lifespan</label>
                                             <div class="col-sm-2">
-                                                <input type="checkbox" id="activatemoms">
-                                                <span>Yes</span>
+                                                <div class="i-checks">
+                                                    <label class="">
+                                                        <div class="icheckbox_square-green" style="position: relative;">
+                                                            <input type="checkbox" id="prologlifespan" value="" style="position: absolute; opacity: 0;">
+                                                            <ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins>
+                                                        </div>
+                                                        <i></i> Yes
+                                                    </label>
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="form-group leftalign">
@@ -185,13 +199,22 @@
                                             <label class="col-sm-2 control-label">Date uploaded</label>
                                             <label class="col-sm-2 control-label">Comment</label>
                                         </div>
+                                        {{#each documents}}
+                                            <div class="form-group leftalign">
+                                                <label class=" col-sm-3">
+                                                    <!-- -->
+                                                </label>
+                                                <label class="col-sm-2 control-label">{{filename}}</label>
+                                                <label class="col-sm-2 control-label">{{date}}</label>
+                                                <label class="col-sm-2 control-label"></label>
+                                            </div>
+                                        {{/each}}
                                     </form>
                                 </div>
 
                                 <div class="modal-footer">
-                                    <button type="button" id="complete-component" class="btn btn-primary">Complete</button>
                                     <button type="button" id="save-component" class="btn btn-primary" data-dismiss="modal">Save</button>
-                                    <button type="button" id="remove-component" class="btn btn-danger" data-dismiss="modal">Delete</button>
+                                    <button type="button" id="remove-component" class="btn btn-danger" data-dismiss="modal">Cancel</button>
                                 </div>
                             </div>
                         </div>
@@ -240,8 +263,15 @@
                                                 Predefined
                                             </div>
                                             <div class="col-sm-4">
-                                                <input type="checkbox" id="activatemoms">
-                                                <span>Activate moms based on type</span>
+                                                <div class="i-checks">
+                                                    <label class="">
+                                                        <div class="icheckbox_square-green" style="position: relative;">
+                                                            <input type="checkbox" id="activatemoms" value="" style="position: absolute; opacity: 0;">
+                                                            <ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins>
+                                                        </div>
+                                                        <i></i> Activate moms based on type
+                                                    </label>
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="form-group">
@@ -340,8 +370,15 @@
                                             <label class="col-sm-2 control-label">Integer</label>
                                             <label class="col-sm-2 control-label">Prolog Lifespan</label>
                                             <div class="col-sm-2">
-                                                <input type="checkbox" id="activatemoms">
-                                                <span>Yes</span>
+                                                <div class="i-checks">
+                                                    <label class="">
+                                                        <div class="icheckbox_square-green" style="position: relative;">
+                                                            <input type="checkbox" id="prologlifespan" value="" style="position: absolute; opacity: 0;">
+                                                            <ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins>
+                                                        </div>
+                                                        <i></i> Yes
+                                                    </label>
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="form-group leftalign">
@@ -371,13 +408,23 @@
                                             <label class="col-sm-2 control-label">Date uploaded</label>
                                             <label class="col-sm-2 control-label">Comment</label>
                                         </div>
+
+                                        {{#each documents}}
+                                            <div class="form-group leftalign">
+                                                <label class=" col-sm-3">
+                                                    <!-- -->
+                                                </label>
+                                                <label class="col-sm-2 control-label">{{filename}}</label>
+                                                <label class="col-sm-2 control-label">{{date}}</label>
+                                                <label class="col-sm-2 control-label"></label>
+                                            </div>
+                                        {{/each}}
                                     </form>
                                 </div>
 
                                 <div class="modal-footer">
-                                    <button type="button" id="complete-component" class="btn btn-primary">Complete</button>
                                     <button type="button" id="save-component" class="btn btn-primary" data-dismiss="modal">Save</button>
-                                    <button type="button" id="remove-component" class="btn btn-danger" data-dismiss="modal">Delete</button>
+                                    <button type="button" id="remove-component" class="btn btn-danger" data-dismiss="modal">Cancel</button>
                                 </div>
                             </div>
                         </div>

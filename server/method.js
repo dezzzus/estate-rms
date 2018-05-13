@@ -39,12 +39,13 @@ Meteor.methods({
     }
   },
 
-  'move-file': function (tmpname, newid) {
-    check(tmpname, String);
+  'move-file': function (doclist, newid) {
+    check(doclist, Array);
     check(newid, String);
-    var oldpath = process.env.PWD + '/.uploads/' + tmpname;
-    var newpath = process.env.PWD + '/.uploads/' + newid + '/' + tmpname;
+
     var newdir = process.env.PWD + '/.uploads/' + newid;
+    var oldpath;
+    var newpath;
 
     if (!fs.existsSync(newdir)) {
       try {
@@ -53,14 +54,22 @@ Meteor.methods({
             console.log('failed to create directory', err);
             return err;
           } else {
-            fs.renameSync(oldpath, newpath);
+            doclist.forEach(function (item) {
+              oldpath = process.env.PWD + '/.uploads/' + item.filename;
+              newpath = process.env.PWD + '/.uploads/' + newid + '/' + item.filename;
+              fs.renameSync(oldpath, newpath);
+            });
           }
         });
       } catch (e) {
         throw new Meteor.Error(500, 'exception in ', e);
       }
     } else {
-      fs.renameSync(oldpath, newpath);
+      doclist.forEach(function (item) {
+        oldpath = process.env.PWD + '/.uploads/' + item.filename;
+        newpath = process.env.PWD + '/.uploads/' + newid + '/' + item.filename;
+        fs.renameSync(oldpath, newpath);
+      });
     }
     return true
   }

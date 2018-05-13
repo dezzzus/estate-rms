@@ -51,12 +51,17 @@ Template.dataTables.rendered = function(){
 
 Template.dataTables.onCreated (function () {
   //Meteor.subscribe('partcol');
-  this.documentpath = null;
+  console.log (Parts.find({}).count());
+  this.documentpath = new ReactiveVar([]);
 });
 
 Template.dataTables.helpers({
   "components": function() {
     return Parts.find({}).fetch();
+  },
+  "documents": function() {
+    console.log (Template.instance().documentpath.get());
+    return Template.instance().documentpath.get();
   }
 });
 
@@ -64,35 +69,28 @@ Template.dataTables.events({
   "click button[data-target=#addComponentModal]": function(ev, inst) {
     ev.preventDefault();
 
-    var clone = inst.addModal.clone();
-
-    $("#addComponentModal").remove();
-    $('.modaldivs').append(clone);
-    console.log (clone);
-
-    $('#addComponentModal #purchase_date .input-group.date').datepicker({
-      todayBtn: "linked",
-      keyboardNavigation: false,
-      forceParse: false,
-      calendarWeeks: true,
-      autoclose: true
-    });
-
-    $('#addComponentModal #lastupdate_date .input-group.date').datepicker({
-      todayBtn: "linked",
-      keyboardNavigation: false,
-      forceParse: false,
-      calendarWeeks: true,
-      autoclose: true
-    });
-
-    // Initialize i-check plugin
-    $('#addComponentModal .i-checks').iCheck({
-      checkboxClass: 'icheckbox_square-green',
-      radioClass: 'iradio_square-green'
-    });
-
     $("#addComponentModal").modal("show");
+    $('#addComponentModal #part').val('');
+    $('#addComponentModal #category-select').val('');
+    $('#addComponentModal #type-select').val('');
+    $('#addComponentModal #place-input').val('');
+    //let yearlyrecurr = $('#yearlyrecurr').;
+    $('#addComponentModal #description_text').val('');
+    $('#addComponentModal #quantity-val').val('');
+    $('#addComponentModal #unit-select').val('');
+    $('#addComponentModal #estimate-val').val('');
+    $('#addComponentModal #realcost-val').val('');
+    $('#addComponentModal #inflation-val').val('');
+    $('#addComponentModal #purchase').val('');
+    $('#addComponentModal #lastupdate').val('');
+    $('#addComponentModal #lifespan-val').val('');
+    $('#addComponentModal #addedyear-val').val('');
+    $('#addComponentModal #whyadded_text').val('');
+
+    $('#addComponentModal #activatemoms').iCheck('uncheck');
+    $('#addComponentModal #yearlyrecurr').iCheck('uncheck');
+    $('#addComponentModal #prologlifespan').iCheck('uncheck');
+    $('#addComponentModal #k3component').iCheck('uncheck');
 
   },
 
@@ -131,7 +129,6 @@ Template.dataTables.events({
     let component = Parts.findOne({_id:componentid});
     $("#editComponentModal").modal("show");
     $('#editComponentModal #part').val(component.partname);
-    console.log (component.category);
     $('#editComponentModal #category-select').val(component.category);
     $('#editComponentModal #type-select').val(component.type);
     $('#editComponentModal #place-input').val(component.place);
@@ -148,33 +145,70 @@ Template.dataTables.events({
     $('#editComponentModal #addedyear-val').val(component.addedyear);
     $('#editComponentModal #whyadded_text').val(component.whyadded);
     $('#editComponentModal #save-component').attr('data-id', componentid);
+
+    //component.activatemoms = true;
+    if (component.activatemoms) {
+      $('#editComponentModal #activatemoms').iCheck('check');
+    } else {
+      $('#editComponentModal #activatemoms').iCheck('uncheck');
+    }
+    if (component.yearlyrecurr) {
+      $('#editComponentModal #yearlyrecurr').iCheck('check');
+    } else {
+      $('#editComponentModal #yearlyrecurr').iCheck('uncheck');
+    }
+    if (component.prologlifespan) {
+      $('#editComponentModal #prologlifespan').iCheck('check');
+    } else {
+      $('#editComponentModal #prologlifespan').iCheck('uncheck');
+    }
+    if (component.activatemoms) {
+      $('#editComponentModal #k3component').iCheck('check');
+    } else {
+      $('#editComponentModal #k3component').iCheck('uncheck');
+    }
+
+    if (!component.document) {
+      component.document = [];
+    }
+    inst.documentpath.set(component.document);
   },
 
   "click #addComponentModal #save-component": function (evt, inst) {
-    let partname = $('#part').val();
-    let category = $('#category-select option:selected').text();
-    let type = $('#type-select option:selected').text();
-    let place = $('#place-input').val();
+    let partname = $('#addComponentModal #part').val();
+    let category = $('#addComponentModal #category-select option:selected').text();
+    let type = $('#addComponentModal #type-select option:selected').text();
+    let place = $('#addComponentModal #place-input').val();
     //let yearlyrecurr = $('#yearlyrecurr').;
-    let description = $('#description_text').val();
-    let quantity = $('#quantity-val').val();
-    let unit = $('#unit-select option:selected').text();
-    let estimate = $('#estimate-val').val();
-    let realcost = $('#realcost-val').val();
-    let inflation = $('#inflation-val').val();
-    let purchaseyear = $('#purchase').val();
-    let lastupdateyear = $('#lastupdate').val();
-    let lifespan = $('#lifespan-val').val();
-    let addedyear = $('#addedyear-val').val();
-    let whyadded = $('#whyadded_text').val();
-    let document = inst.documentpath;
+    let description = $('#addComponentModal #description_text').val();
+    let quantity = $('#addComponentModal #quantity-val').val();
+    let unit = $('#addComponentModal #unit-select option:selected').text();
+    let estimate = $('#addComponentModal #estimate-val').val();
+    let realcost = $('#addComponentModal #realcost-val').val();
+    let inflation = $('#addComponentModal #inflation-val').val();
+    let purchaseyear = $('#addComponentModal #purchase').val();
+    let lastupdateyear = $('#addComponentModal #lastupdate').val();
+    let lifespan = $('#addComponentModal #lifespan-val').val();
+    let addedyear = $('#addComponentModal #addedyear-val').val();
+    let whyadded = $('#addComponentModal #whyadded_text').val();
+    let activatemoms = $('#addComponentModal #activatemoms').is(':checked');
+    let yearlyrecurr = $('#addComponentModal #yearlyrecurr').is(':checked');
+    let prologlifespan = $('#addComponentModal #prologlifespan').is(':checked');
+    let k3component = $('#addComponentModal #k3component').is(':checked');
+
+    let document = [];
+    inst.documentpath.get().forEach(function (doc) {
+      delete doc.newadded;
+      document.push (doc);
+    });
+    let completed = false;
     let newentry = {partname, category, type, place, description, quantity, unit, estimate, realcost, inflation, purchaseyear,
-      lastupdateyear, lifespan, addedyear, whyadded, document};
+      lastupdateyear, lifespan, addedyear, whyadded, document, completed, k3component, prologlifespan, yearlyrecurr, activatemoms};
     //console.log (newentry);
     let newid = Parts.insert(newentry);
     //console.log (newid);
     if (document) {
-      Meteor.call('move-file', document, newid, (err, result) => {
+      Meteor.call('move-file', inst.documentpath.get(), newid, (err, result) => {
         if (err) {
           console.log(err);
         }
@@ -200,9 +234,18 @@ Template.dataTables.events({
     let lifespan = $('#editComponentModal #lifespan-val').val();
     let addedyear = $('#editComponentModal #addedyear-val').val();
     let whyadded = $('#editComponentModal #whyadded_text').val();
-    let document = inst.documentpath;
+    let activatemoms = $('#editComponentModal #activatemoms').is(':checked');
+    let yearlyrecurr = $('#editComponentModal #yearlyrecurr').is(':checked');
+    let prologlifespan = $('#editComponentModal #prologlifespan').is(':checked');
+    let k3component = $('#editComponentModal #k3component').is(':checked');
+    let document = [];
+    inst.documentpath.get().forEach(function (doc) {
+      delete doc.newadded;
+      document.push (doc);
+    });
+    let completed = true;
     let newentry = {partname, category, type, place, description, quantity, unit, estimate, realcost, inflation, purchaseyear,
-      lastupdateyear, lifespan, addedyear, whyadded};
+      lastupdateyear, lifespan, addedyear, whyadded, completed, k3component, prologlifespan, yearlyrecurr, activatemoms};
     if (document) {
       newentry.document = document;
     }
@@ -210,7 +253,7 @@ Template.dataTables.events({
     Parts.update({_id: componentid}, {$set:newentry});
     //console.log (newid);
     if (document) {
-      Meteor.call('move-file', document, componentid, (err, result) => {
+      Meteor.call('move-file', inst.documentpath.get(), componentid, (err, result) => {
         if (err) {
           console.log(err);
         }
@@ -247,7 +290,27 @@ Template.dataTables.events({
     reader.onload = function(fileLoadEvent) {
       Meteor.call('file-upload', file.name, fileLoadEvent.target.result, (err, result) => {
         if (result) {
-          inst.documentpath = file.name;
+          var doclist = inst.documentpath.get();
+          console.log (doclist);
+          doclist.push ({filename : file.name, date: new Date()});
+          inst.documentpath.set(doclist);
+        }
+      });
+    };
+    reader.readAsDataURL(file);
+  },
+
+  "change #editComponentModal #inputDoc": function (evt, inst) {
+    //var func = this;
+    var file = evt.currentTarget.files[0];
+    var reader = new FileReader();
+    reader.onload = function(fileLoadEvent) {
+      Meteor.call('file-upload', file.name, fileLoadEvent.target.result, (err, result) => {
+        if (result) {
+          var doclist = inst.documentpath.get();
+          console.log (doclist);
+          doclist.push ({filename : file.name, date: new Date()});
+          inst.documentpath.set(doclist);
         }
       });
     };
