@@ -102,6 +102,8 @@ Template.dataTables.events({
     $('#addComponentModal #prologlifespan').iCheck('uncheck');
     $('#addComponentModal #k3component').iCheck('uncheck');
 
+    inst.documentpath.set([]);
+
   },
 
   "click i[data-target=#editComponentModal]": function(evt, inst) {
@@ -330,6 +332,7 @@ Template.dataTables.events({
   "change .uploaded-comment": function (evt, inst) {
     var doclist = inst.documentpath.get();
     console.log (doclist);
+    console.log (evt.target.dataset);
     var docid = evt.target.dataset.docid;
     console.log (docid);
     doclist[docid].comment = evt.target.value;
@@ -337,6 +340,11 @@ Template.dataTables.events({
   },
 
   "change #addComponentModal #category-select": function (evt, inst) {
+    let category = evt.target.options[evt.target.selectedIndex].value;
+    inst.curcategory.set(category);
+  },
+
+  "change #editComponentModal #category-select": function (evt, inst) {
     let category = evt.target.options[evt.target.selectedIndex].value;
     inst.curcategory.set(category);
   }
