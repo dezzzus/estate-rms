@@ -44,10 +44,9 @@
                                             <label class="col-sm-2 control-label">Type</label>
                                             <div class="col-sm-4">
                                                 <select class="form-control m-b" id="type-select">
-                                                    <option value="type 1">type 1</option>
-                                                    <option value="type 2">type 2</option>
-                                                    <option value="type 3">type 3</option>
-                                                    <option value="type 4">type 4</option>
+                                                    {{#each types}}
+                                                        <option value={{this}}>{{this}}</option>
+                                                    {{/each}}
                                                 </select>
                                             </div>
                                             <div class="col-sm-1 control-label">
@@ -206,7 +205,9 @@
                                                 </label>
                                                 <label class="col-sm-2 control-label">{{filename}}</label>
                                                 <label class="col-sm-2 control-label">{{date}}</label>
-                                                <label class="col-sm-2 control-label"></label>
+                                                <div class="col-sm-2">
+                                                    <input type="text" placeholder="file comment" class="form-control uploaded-comment" dataset-docid="{{@index}}">
+                                                </div>
                                             </div>
                                         {{/each}}
                                     </form>
@@ -416,7 +417,9 @@
                                                 </label>
                                                 <label class="col-sm-2 control-label">{{filename}}</label>
                                                 <label class="col-sm-2 control-label">{{date}}</label>
-                                                <label class="col-sm-2 control-label"></label>
+                                                <div class="col-sm-2">
+                                                    <input type="text" placeholder="file comment" class="form-control uploaded-comment" dataset-docid="{{@index}}">
+                                                </div>
                                             </div>
                                         {{/each}}
                                     </form>

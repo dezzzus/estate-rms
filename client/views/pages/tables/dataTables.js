@@ -53,6 +53,7 @@ Template.dataTables.onCreated (function () {
   //Meteor.subscribe('partcol');
   console.log (Parts.find({}).count());
   this.documentpath = new ReactiveVar([]);
+  this.curcategory = new ReactiveVar('category 1');
 });
 
 Template.dataTables.helpers({
@@ -62,6 +63,15 @@ Template.dataTables.helpers({
   "documents": function() {
     console.log (Template.instance().documentpath.get());
     return Template.instance().documentpath.get();
+  },
+  "types": function () {
+    var typearr = ['type 1', 'type 2', 'type 3', 'type 4'];
+    var i =0;
+    var curcategory = Template.instance().curcategory.get();
+    for (; i < typearr.length; i++) {
+      typearr[i] = curcategory + ' - ' + typearr[i];
+    }
+    return typearr;
   }
 });
 
@@ -292,7 +302,7 @@ Template.dataTables.events({
         if (result) {
           var doclist = inst.documentpath.get();
           console.log (doclist);
-          doclist.push ({filename : file.name, date: new Date()});
+          doclist.push ({filename : file.name, date: new Date(), comment: ''});
           inst.documentpath.set(doclist);
         }
       });
@@ -316,4 +326,18 @@ Template.dataTables.events({
     };
     reader.readAsDataURL(file);
   },
+
+  "change .uploaded-comment": function (evt, inst) {
+    var doclist = inst.documentpath.get();
+    console.log (doclist);
+    var docid = evt.target.dataset.docid;
+    console.log (docid);
+    doclist[docid].comment = evt.target.value;
+    inst.documentpath.set(doclist);
+  },
+
+  "change #addComponentModal #category-select": function (evt, inst) {
+    let category = evt.target.options[evt.target.selectedIndex].value;
+    inst.curcategory.set(category);
+  }
 });
